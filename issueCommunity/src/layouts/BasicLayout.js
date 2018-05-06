@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Layout, Icon, Button } from 'antd';
+import { Layout, Button } from 'antd';
 
 import styles from './BasicLayout.less';
 import SingleArticle from '../components/SingleArticle';
@@ -22,7 +22,7 @@ class BasicLayout extends React.Component {
         <Content className={styles.content}>
           <SingleArticle />
         </Content>
-        <Footer className={styles.footer}>Ant Design ©2016 Created by Ant UED</Footer>
+        <Footer className={styles.footer}>Issue Community ©2018 Designed by Glassay</Footer>
       </Layout>
     );
   }

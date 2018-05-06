@@ -35,7 +35,7 @@ class SingleArticle extends React.Component {
           onChange: (page) => {
             console.log(page);
           },
-          pageSize: 10,
+          pageSize: 6,
         }}
         dataSource={listData}
         renderItem={item => (
@@ -48,7 +48,6 @@ class SingleArticle extends React.Component {
               title={<a className={styles.title} href={item.href}>{item.title}</a>}
               description={item.description}
             />
-            {item.content}
           </List.Item>
         )}
       />
