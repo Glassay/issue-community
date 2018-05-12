@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Input, Button, Icon } from 'antd';
+import { Input, Button } from 'antd';
 
 import styles from './InputArea.less';
 

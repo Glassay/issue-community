@@ -5,6 +5,7 @@
 
 import React from 'react';
 import { Layout, Button, Divider } from 'antd';
+import { Link } from 'dva/router';
 
 import styles from './DetailsPage.less';
 import Comment from '../components/Comment/Comment';
@@ -14,10 +15,11 @@ const { Content, Header, Footer } = Layout;
 
 class DetailsPage extends React.Component {
   render() {
+    console.log('adasd', this.props.params)
     return(
       <Layout>
         <Header className={styles.header}>
-          <span className={styles.title}>论题研讨</span>
+          <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
           <span className={styles.login}>登录</span>
           <Button type="primary" className={styles.register}>注册</Button>
         </Header>
