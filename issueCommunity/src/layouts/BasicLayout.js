@@ -3,14 +3,13 @@
  */
 
 import React from 'react';
-import { Layout, Button, Form, Input, Modal, Avatar, Upload } from 'antd';
 import { Link } from 'dva/router';
+import { Layout, Avatar, Menu, Dropdown } from 'antd';
 
 import styles from './BasicLayout.less';
 import Articles from '../components/Articles';
 
 const { Header, Content, Footer } = Layout;
-const FormItem = Form.Item;
 
 const listData = [];
 
@@ -23,132 +22,23 @@ for (let i = 0; i < 23; i++) {
   });
 }
 
-const RegisterModal = Form.create()(
-  class extends React.Component {
-    state = {
-      confirmDirty: false,
-      autoCompleteResult: [],
-    };
-    compareToFirstPassword = (rule, value, callback) => {
-      const form = this.props.form;
-      console.log('form>>>>>', form);
-      if (value && value !== form.getFieldValue('password')) {
-        callback('两次密码输入不一致, 请重新输入！');
-      } else {
-        callback();
-      }
-    }
-    render() {
-      const { visible, onCancel, onCreate, form } = this.props;
-      const { getFieldDecorator } = form;
-      return (
-        <Modal
-          visible={visible}
-          title="用户信息注册"
-          okText="提交"
-          cancelText="取消"
-          onCancel={onCancel}
-          onOk={onCreate}
-          maskStyle={{ opacity: 0.2 }}
-        >
-          <Form layout="vertical">
-            <FormItem label="用户名" hasFeedback>
-              {getFieldDecorator('userName', {
-                initialValue: this.props.name,
-                rules: [{
-                  required: true,
-                  type: 'email',
-                  message: '用户名格式为邮箱！',
-                }],
-              })(
-                <Input />
-              )}
-            </FormItem>
-            <FormItem label="密码" hasFeedback>
-              {getFieldDecorator('password', {
-                initialValue: this.props.studentNumber,
-                rules: [{
-                  required: true,
-                  message: '请输入密码！',
-                }]
-              })(
-                <Input type="password" />
-              )}
-            </FormItem>
-            <FormItem label="确认密码" hasFeedback>
-              {getFieldDecorator('rePassword', {
-                initialValue: this.props.studentNumber,
-                rules: [{
-                  required: true,
-                  message: '两次密码输入不一致, 请重新输入！'
-                }, {
-                  validator: this.compareToFirstPassword,
-                }]
-              })(
-                <Input type="password" />
-              )}
-            </FormItem>
-            <FormItem label="头像" hasFeedback>
-              {getFieldDecorator('avatar', {
-                initialValue: this.props.club,
-                rules: [{ required: true, message: '请选择头像！'}]
-              })(
-                <Upload>
-                  <Avatar/>
-                </Upload>
-              )}
-            </FormItem>
-            <FormItem label="昵称" hasFeedback>
-              {getFieldDecorator('nickname', {
-                initialValue: this.props.class,
-                rules: [{ required: true, message: '请输入昵称！'}]
-              })(
-                <Input />
-              )}
-            </FormItem>
-          </Form>
-        </Modal>
-      )
-    }
-  }
-)
-
 class BasicLayout extends React.Component {
-  state = {
-    visible: false,
-  }
-
-  showModal = () => {
-    this.setState({
-      visible: true,
-    })
-    console.log('show modal');
-    console.log('visible+++++', this.state.visible);
-  }
-
-  handleCancle = () => {
-    this.setState({
-      visible: false,
-    })
-  }
-
-  saveFormRef = (formRef) => {
-    this.formRef = formRef;
-  }
-
   render() {
-    console.log('visible>>>', this.state.visible);
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <Link to="/login"><span onClick={this.loginOut}>退出登录</span></Link>
+        </Menu.Item>
+      </Menu>
+    )
     return(
       <Layout>
         <Header className={styles.header}>
           <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
-          <span className={styles.login}>登录</span>
-          <Button onClick={this.showModal} type="primary" className={styles.register}>注册</Button>
-          <RegisterModal
-            visible={this.state.visible}
-            wrappedComponentRef={this.saveFormRef}
-            onCancel={this.handleCancle}
-          />
+          <span className={styles.login}>提问</span>
+          <Dropdown overlay={menu}>
+            <Avatar className={styles.register} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+          </Dropdown>
         </Header>
         <Content className={styles.content}>
           <Articles />
