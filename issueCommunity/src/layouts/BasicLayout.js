@@ -3,7 +3,7 @@
  */
 
 import React from 'react';
-import { Layout, Button, Form, Input, Modal, Avatar } from 'antd';
+import { Layout, Button, Form, Input, Modal, Avatar, Upload } from 'antd';
 import { Link } from 'dva/router';
 
 import styles from './BasicLayout.less';
@@ -38,13 +38,6 @@ const RegisterModal = Form.create()(
         callback();
       }
     }
-    // validateToNextPassword = (rule, value, callback) => {
-    //   const form = this.props.form;
-    //   if (value && this.state.confirmDirty) {
-    //     form.validateFields(['confirm'], { force: true });
-    //   }
-    //   callback();
-    // }
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
@@ -100,9 +93,9 @@ const RegisterModal = Form.create()(
                 initialValue: this.props.club,
                 rules: [{ required: true, message: '请选择头像！'}]
               })(
-                <div>
+                <Upload>
                   <Avatar/>
-                </div>
+                </Upload>
               )}
             </FormItem>
             <FormItem label="昵称" hasFeedback>
