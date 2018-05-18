@@ -24,10 +24,12 @@ for (let i = 0; i < 23; i++) {
 
 class BasicLayout extends React.Component {
   render() {
+    const loginIngo = JSON.parse(localStorage.getItem('usersInfo'));
+    console.log('loginIngo>>>>>', loginIngo);
     const menu = (
       <Menu>
         <Menu.Item>
-          <Link to="/login"><span onClick={this.loginOut}>退出登录</span></Link>
+          <Link to="/login"><span>退出登录</span></Link>
         </Menu.Item>
       </Menu>
     )
@@ -37,7 +39,7 @@ class BasicLayout extends React.Component {
           <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
           <span className={styles.login}>提问</span>
           <Dropdown overlay={menu}>
-            <Avatar className={styles.register} src="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png" />
+            <Avatar className={styles.register} size="large" src={loginIngo.avatar} />
           </Dropdown>
         </Header>
         <Content className={styles.content}>

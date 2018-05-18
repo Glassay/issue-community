@@ -4,14 +4,13 @@
  */
 
 import React from 'react';
-import { Layout, Button, Divider, Icon, Upload, Modal } from 'antd';
+import { Layout, Divider, Icon, Upload, Modal, Menu, Dropdown, Avatar } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 
 import styles from './DetailsPage.less';
 import Comment from '../components/Comment/Comment';
 import InputArea from '../components/Comment/InputArea';
-// import Test from '../components/Test';
 
 const { Content, Header, Footer } = Layout;
 const QINIU_SERVER = 'http://up.qiniu.com';
@@ -46,6 +45,7 @@ class DetailsPage extends React.Component {
     console.log('url>>>>>', this.state.previewImage);
     console.log('imgUrl>>>>>', this.state.imgUrl);
     console.log('adasd', this.props.params)
+    const loginIngo = JSON.parse(localStorage.getItem('usersInfo'));
     const { currentData } = this.props;
     const { previewVisible, previewImage, fileList } = this.state;
     const uploadButton = (
@@ -54,14 +54,23 @@ class DetailsPage extends React.Component {
         <div className="ant-upload-text">上传</div>
       </div>
     );
+    const menu = (
+      <Menu>
+        <Menu.Item>
+          <Link to="/login"><span onClick={this.loginOut}>退出登录</span></Link>
+        </Menu.Item>
+      </Menu>
+    )
     console.log('currentData>>>>>', currentData);
     return(
       currentData === null ? null :
       <Layout>
         <Header className={styles.header}>
           <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
-          <span className={styles.login}>登录</span>
-          <Button type="primary" className={styles.register}>注册</Button>
+          <span className={styles.login}>提问</span>
+          <Dropdown overlay={menu}>
+            <Avatar className={styles.register} size="large" src={loginIngo.avatar} />
+          </Dropdown>
         </Header>
         <Content className={styles.content}>
           <h2>{currentData.title}</h2>
