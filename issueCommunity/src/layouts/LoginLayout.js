@@ -57,7 +57,7 @@ const RegisterModal = Form.create()(
         <Modal
           visible={visible}
           title="用户信息注册"
-          okText="提交"
+          okText="注册"
           cancelText="取消"
           onCancel={onCancel}
           onOk={onCreate}
@@ -102,7 +102,7 @@ const RegisterModal = Form.create()(
             </FormItem>
             <FormItem label="头像" hasFeedback>
               {getFieldDecorator('avatar', {
-                initialValue: this.props.club,
+                initialValue: this.state.imgUrl,
                 rules: [{ required: true, message: '请选择头像！'}]
               })(
                 <Upload {...props}>
@@ -116,7 +116,7 @@ const RegisterModal = Form.create()(
             </FormItem>
             <FormItem label="昵称" hasFeedback>
               {getFieldDecorator('nickname', {
-                initialValue: this.props.class,
+                initialValue: this.props.nickname,
                 rules: [{ required: true, message: '请输入昵称！'}]
               })(
                 <Input />
@@ -151,6 +151,25 @@ class LoginLayout extends React.Component {
   saveFormRef = (formRef) => {
     this.formRef = formRef;
   }
+
+  handleCreate = (e) => {
+    e.preventDefault();
+    const form = this.formRef.props.form;
+    form.validateFields((err, values) => {
+      if(err) {
+        return false;
+      }
+      const registerInfo = {
+        nickname: values.nickname,
+        userName: values.userName,
+        password: values.password,
+        avatar: `http://p7knynd79.bkt.clouddn.com/${values.avatar.file.response.hash}`
+      }
+      console.log('values>>>>>', registerInfo);
+      console.log('Received values of form: ', values);
+    })
+  }
+
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
@@ -193,6 +212,7 @@ class LoginLayout extends React.Component {
                 visible={this.state.visible}
                 wrappedComponentRef={this.saveFormRef}
                 onCancel={this.handleCancle}
+                onCreate={this.handleCreate}
               />
             </FormItem>
           </Form>
