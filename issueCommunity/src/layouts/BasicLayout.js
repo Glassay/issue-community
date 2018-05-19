@@ -1,5 +1,5 @@
 /**
- * 2018-05-06 Glassay
+ * 2018-05-06
  */
 
 import React from 'react';
@@ -37,7 +37,7 @@ class BasicLayout extends React.Component {
       <Layout>
         <Header className={styles.header}>
           <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
-          <span className={styles.login}>提问</span>
+          <Link to="/main/release"><span className={styles.login}>提问</span></Link>
           <Dropdown overlay={menu}>
             <Avatar className={styles.register} size="large" src={loginIngo.avatar} />
           </Dropdown>

@@ -1,10 +1,10 @@
 /**
- * 2018-05-06 Glassay
+ * 2018-05-06
  * 详细内容页面
  */
 
 import React from 'react';
-import { Layout, Divider, Icon, Upload, Modal, Menu, Dropdown, Avatar, message } from 'antd';
+import { Layout, Divider, Icon, Upload, Menu, Dropdown, Avatar, message } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 
@@ -20,25 +20,9 @@ const data = {
 
 class DetailsPage extends React.Component {
   state = {
-    // previewVisible: false,
-    // previewImage: '',
     imgUrl: null,
     videoUrl: null
   };
-
-  // handleCancel = () => this.setState({ previewVisible: false })
-
-  // handlePreview = (file) => {
-  //   this.setState({
-  //     previewImage: file.url || file.thumbUrl,
-  //     previewVisible: true,
-  //   });
-  // }
-
-  // handleChange = ({ fileList }) => this.setState({
-  //   fileList,
-  //   imgUrl: fileList[0].thumbUrl,
-  // })
 
   render() {
     const _this = this;
@@ -88,7 +72,6 @@ class DetailsPage extends React.Component {
     };
     const loginIngo = JSON.parse(localStorage.getItem('usersInfo'));
     const { currentData } = this.props;
-    const { previewVisible, previewImage } = this.state;
     const menu = (
       <Menu>
         <Menu.Item>
@@ -102,7 +85,7 @@ class DetailsPage extends React.Component {
       <Layout>
         <Header className={styles.header}>
           <Link to="/main"><span className={styles.title}>论题研讨</span></Link>
-          <span className={styles.login}>提问</span>
+          <Link to="/main/release"><span className={styles.login}>提问</span></Link>
           <Dropdown overlay={menu}>
             <Avatar className={styles.register} size="large" src={loginIngo.avatar} />
           </Dropdown>
@@ -123,9 +106,6 @@ class DetailsPage extends React.Component {
               <Icon style={{ fontSize: 30, color: '#EC7700' }} type="video-camera" />
               <span style={{ marginLeft: 10, marginBottom: 20, color: '#EC7700' }}>上传视频</span>
             </Upload>
-            <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
-              <img alt="example" style={{ width: '100%' }} src={previewImage} />
-            </Modal>
           </div>
           <Comment />
           <Comment />

@@ -81,7 +81,8 @@ const RegisterModal = Form.create()(
                 initialValue: this.props.studentNumber,
                 rules: [{
                   required: true,
-                  message: '请输入密码！',
+                  message: '请输入长度不小于6位密码！',
+                  min: 6
                 }]
               })(
                 <Input type="password" />
@@ -92,7 +93,8 @@ const RegisterModal = Form.create()(
                 initialValue: this.props.studentNumber,
                 rules: [{
                   required: true,
-                  message: '两次密码输入不一致, 请重新输入！'
+                  message: '两次密码输入不一致, 请重新输入！',
+                  min: 6
                 }, {
                   validator: this.compareToFirstPassword,
                 }]
@@ -207,7 +209,11 @@ class LoginLayout extends React.Component {
             </FormItem>
             <FormItem>
               {getFieldDecorator('password', {
-                rules: [{ required: true, message: '请输入密码！' }],
+                rules: [{
+                  required: true,
+                  min: 6,
+                  message: '请输入长度不小于6位的密码！'
+                }],
               })(
                 <Input prefix={<Icon type="lock" style={{ color: 'rgba(0,0,0,.25)' }} />} type="password" placeholder="Password" />
               )}

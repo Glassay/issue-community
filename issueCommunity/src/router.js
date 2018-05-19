@@ -4,6 +4,7 @@ import { Router, Route, Switch } from 'dva/router';
 import LoginLayout from './layouts/LoginLayout';
 import BasicLayout from './layouts/BasicLayout';
 import DetailsPage from './layouts/DetailsPage';
+import ReleaseIssue from './layouts/ReleaseIssue';
 
 function RouterConfig({ history }) {
   return (
@@ -12,6 +13,7 @@ function RouterConfig({ history }) {
         <Route path="/login" exact component={LoginLayout} />
         <Route path="/main" exact component={BasicLayout} />
         <Route path="/main/article" component={DetailsPage} />
+        <Route path="/main/release" component={ReleaseIssue} />
       </Switch>
     </Router>
   );
