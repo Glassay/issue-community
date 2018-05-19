@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { Layout, Divider, Icon, Upload, Modal, Menu, Dropdown, Avatar } from 'antd';
+import { Layout, Divider, Icon, Upload, Modal, Menu, Dropdown, Avatar, message } from 'antd';
 import { connect } from 'dva';
 import { Link } from 'dva/router';
 
@@ -20,40 +20,75 @@ const data = {
 
 class DetailsPage extends React.Component {
   state = {
-    previewVisible: false,
-    previewImage: '',
-    fileList: [],
+    // previewVisible: false,
+    // previewImage: '',
     imgUrl: null,
+    videoUrl: null
   };
 
-  handleCancel = () => this.setState({ previewVisible: false })
+  // handleCancel = () => this.setState({ previewVisible: false })
 
-  handlePreview = (file) => {
-    this.setState({
-      previewImage: file.url || file.thumbUrl,
-      previewVisible: true,
-    });
-  }
+  // handlePreview = (file) => {
+  //   this.setState({
+  //     previewImage: file.url || file.thumbUrl,
+  //     previewVisible: true,
+  //   });
+  // }
 
-  handleChange = ({ fileList }) => this.setState({
-    fileList,
-    imgUrl: fileList[0].thumbUrl,
-  })
+  // handleChange = ({ fileList }) => this.setState({
+  //   fileList,
+  //   imgUrl: fileList[0].thumbUrl,
+  // })
 
   render() {
-    console.log('file>>>>>', this.state.fileList);
-    console.log('url>>>>>', this.state.previewImage);
-    console.log('imgUrl>>>>>', this.state.imgUrl);
-    console.log('adasd', this.props.params)
+    const _this = this;
+    const props1 = {
+      name: 'file',
+      action: QINIU_SERVER,
+      headers: {
+        authorization: 'authorization-text',
+      },
+      data: data,
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log('qqqqqqqqqq', info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          _this.setState({
+            imgUrl: `http://p7knynd79.bkt.clouddn.com/${info.file.response.hash}`
+          })
+          console.log('aaaaaaaa', info.file.response.hash);
+          message.success(`${info.file.name} 上传成功`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} 上传失败`);
+        }
+      },
+    };
+    const props2 = {
+      name: 'file',
+      action: QINIU_SERVER,
+      headers: {
+        authorization: 'authorization-text',
+      },
+      data: data,
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log('qqqqqqqqqq', info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          _this.setState({
+            videoUrl: `http://p7knynd79.bkt.clouddn.com/${info.file.response.hash}`
+          })
+          console.log('aaaaaaaa', info.file.response.hash);
+          message.success(`${info.file.name} 上传成功`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} 上传失败`);
+        }
+      },
+    };
     const loginIngo = JSON.parse(localStorage.getItem('usersInfo'));
     const { currentData } = this.props;
-    const { previewVisible, previewImage, fileList } = this.state;
-    const uploadButton = (
-      <div>
-        <Icon type="plus" />
-        <div className="ant-upload-text">上传</div>
-      </div>
-    );
+    const { previewVisible, previewImage } = this.state;
     const menu = (
       <Menu>
         <Menu.Item>
@@ -80,15 +115,13 @@ class DetailsPage extends React.Component {
             <InputArea />
           </div>
           <div className="clearfix">
-            <Upload
-              action={QINIU_SERVER}
-              data={data}
-              listType="picture-card"
-              fileList={fileList}
-              onPreview={this.handlePreview}
-              onChange={this.handleChange}
-            >
-              {fileList.length >= 1 ? null : uploadButton}
+            <Upload {...props1}>
+              <Icon style={{ fontSize: 30, color: '#EC7700' }} type="picture" />
+              <span style={{ marginLeft: 10, color: '#EC7700' }}>上传图片</span>
+            </Upload>
+            <Upload {...props2}>
+              <Icon style={{ fontSize: 30, color: '#EC7700' }} type="video-camera" />
+              <span style={{ marginLeft: 10, marginBottom: 20, color: '#EC7700' }}>上传视频</span>
             </Upload>
             <Modal visible={previewVisible} footer={null} onCancel={this.handleCancel}>
               <img alt="example" style={{ width: '100%' }} src={previewImage} />

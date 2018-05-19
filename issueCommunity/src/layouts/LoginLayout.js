@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Form, Icon, Input, Button, Modal, Upload, Avatar } from 'antd';
+import { Layout, Form, Icon, Input, Button, Modal, Upload, Avatar, message } from 'antd';
 
 import styles from './LoginLayout.less';
 
@@ -12,6 +12,7 @@ const RegisterModal = Form.create()(
     state = {
       confirmDirty: false,
       autoCompleteResult: [],
+      imgUrl: null
     };
     compareToFirstPassword = (rule, value, callback) => {
       const form = this.props.form;
@@ -25,6 +26,33 @@ const RegisterModal = Form.create()(
     render() {
       const { visible, onCancel, onCreate, form } = this.props;
       const { getFieldDecorator } = form;
+      const QINIU_SERVER = 'http://up.qiniu.com';
+      const data = {
+        token: '1YmDMnP5QmFBcYxOsxWVhY1vBN1ZyJUnEKpDXaRR:WqD4xycS4u9j6xdGzkzTm099c3Q=:eyJzY29wZSI6ImltYWdlIiwiZGVhZGxpbmUiOjE3NjY4NTEyMDB9',
+      }
+      const _this = this;
+      const props = {
+        name: 'file',
+        action: QINIU_SERVER,
+        headers: {
+          authorization: 'authorization-text',
+        },
+        data: data,
+        onChange(info) {
+          if (info.file.status !== 'uploading') {
+            console.log('qqqqqqqqqq', info.file, info.fileList);
+          }
+          if (info.file.status === 'done') {
+            _this.setState({
+              imgUrl: `http://p7knynd79.bkt.clouddn.com/${info.file.response.hash}`
+            })
+            console.log('aaaaaaaa', info.file.response.hash);
+            message.success(`${info.file.name} 上传成功`);
+          } else if (info.file.status === 'error') {
+            message.error(`${info.file.name} 上传失败`);
+          }
+        },
+      };
       return (
         <Modal
           visible={visible}
@@ -77,8 +105,12 @@ const RegisterModal = Form.create()(
                 initialValue: this.props.club,
                 rules: [{ required: true, message: '请选择头像！'}]
               })(
-                <Upload>
-                  <Avatar/>
+                <Upload {...props}>
+                  <Avatar
+                    style={{ border: '1px solid #E4EDDB'}}
+                    size="large"
+                    src={this.state.imgUrl}
+                  />
                 </Upload>
               )}
             </FormItem>
