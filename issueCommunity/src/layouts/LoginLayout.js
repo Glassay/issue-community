@@ -161,12 +161,21 @@ class LoginLayout extends React.Component {
       }
       const registerInfo = {
         nickname: values.nickname,
-        userName: values.userName,
+        name: values.userName,
         password: values.password,
+        confirm_password: values.rePassword,
         avatar: `http://p7knynd79.bkt.clouddn.com/${values.avatar.file.response.hash}`
       }
       console.log('values>>>>>', registerInfo);
       console.log('Received values of form: ', values);
+      this.props.dispatch({
+        type: 'users/uerRegister',
+        payload: registerInfo
+      })
+      form.resetFields();
+      this.setState({
+        visible: false
+      })
     })
   }
 
@@ -176,7 +185,7 @@ class LoginLayout extends React.Component {
       if (!err) {
         console.log('Received values of form: ', values);
         this.props.dispatch({
-          type: 'login/adminLogin',
+          type: 'users/adminLogin',
           payload: values,
         })
       }
@@ -190,7 +199,7 @@ class LoginLayout extends React.Component {
         <Content className={styles.bgimage}>
           <Form onSubmit={this.handleSubmit} className={styles.loginForm}>
             <FormItem>
-              {getFieldDecorator('userName', {
+              {getFieldDecorator('name', {
                 rules: [{ required: true, message: '请输入用户名！' }],
               })(
                 <Input prefix={<Icon type="user" style={{ color: 'rgba(0,0,0,.25)' }} />} placeholder="Username" />
@@ -223,4 +232,4 @@ class LoginLayout extends React.Component {
 }
 LoginLayout = Form.create({})(LoginLayout);
 
-export default connect(({ login }) => ({ ...login }))(LoginLayout);
+export default connect(({ users }) => ({ ...users}))(LoginLayout);
