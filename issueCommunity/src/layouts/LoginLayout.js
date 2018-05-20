@@ -10,8 +10,8 @@ const { Content } = Layout;
 const RegisterModal = Form.create()(
   class extends React.Component {
     state = {
-      confirmDirty: false,
-      autoCompleteResult: [],
+      // confirmDirty: false,
+      // autoCompleteResult: [],
       imgUrl: null
     };
     compareToFirstPassword = (rule, value, callback) => {
@@ -104,7 +104,7 @@ const RegisterModal = Form.create()(
             </FormItem>
             <FormItem label="姓名" hasFeedback>
               {getFieldDecorator('name', {
-                initialValue: this.props.nickname,
+                initialValue: this.props.name,
                 rules: [{
                   required: true,
                   max: 16,
@@ -126,7 +126,7 @@ const RegisterModal = Form.create()(
             </FormItem>
             <FormItem label="学校" hasFeedback>
               {getFieldDecorator('school', {
-                initialValue: this.props.nickname,
+                initialValue: this.props.school,
                 rules: [{
                   required: true,
                   message: '请输入所在学校！'
@@ -137,7 +137,7 @@ const RegisterModal = Form.create()(
             </FormItem>
             <FormItem label="头像">
               {getFieldDecorator('avatar', {
-                initialValue: this.state.imgUrl,
+                initialValue: '',
                 rules: [{ required: true, message: '请选择头像！'}]
               })(
                 <Upload {...props}>
