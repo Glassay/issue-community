@@ -5,6 +5,7 @@ import LoginLayout from './layouts/LoginLayout';
 import BasicLayout from './layouts/BasicLayout';
 import DetailsPage from './layouts/DetailsPage';
 import ReleaseIssue from './layouts/ReleaseIssue';
+import ManageLayout from './layouts/ManageLayout';
 
 function RouterConfig({ history }) {
   return (
@@ -12,6 +13,7 @@ function RouterConfig({ history }) {
       <Switch>
         <Route path="/login" exact component={LoginLayout} />
         <Route path="/main" exact component={BasicLayout} />
+        <Route path="/manage" component={ManageLayout} />
         <Route path="/main/article" component={DetailsPage} />
         <Route path="/main/release" component={ReleaseIssue} />
       </Switch>

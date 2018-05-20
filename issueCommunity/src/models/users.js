@@ -16,7 +16,11 @@ export default {
       if(result.status === 'success') {
         const usersInfo = JSON.stringify(result);
         localStorage.setItem('usersInfo', usersInfo)
-        yield put(routerRedux.push('/main'))
+        if(result.isadmin === true) {
+          yield put(routerRedux.push('/manage'))
+        } else {
+          yield put(routerRedux.push('/main'))
+        }
       } else {
         message.error('用户名或密码错误, 请重新输入！');
       }

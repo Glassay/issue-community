@@ -1,6 +1,6 @@
 import React from 'react';
 import { connect } from 'dva';
-import { Layout, Form, Icon, Input, Button, Modal, Upload, Avatar, message } from 'antd';
+import { Layout, Form, Icon, Input, Button, Modal, Upload, Avatar, message, Radio } from 'antd';
 
 import styles from './LoginLayout.less';
 
@@ -102,7 +102,40 @@ const RegisterModal = Form.create()(
                 <Input type="password" />
               )}
             </FormItem>
-            <FormItem label="头像" hasFeedback>
+            <FormItem label="姓名" hasFeedback>
+              {getFieldDecorator('name', {
+                initialValue: this.props.nickname,
+                rules: [{
+                  required: true,
+                  max: 16,
+                  message: '请输入你的真实姓名！'
+                }]
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="性别">
+              {getFieldDecorator('sex', {
+                initialValue: 'man',
+              })(
+                <Radio.Group>
+                  <Radio value="man">男</Radio>
+                  <Radio value="woman">女</Radio>
+                </Radio.Group>
+              )}
+            </FormItem>
+            <FormItem label="学校" hasFeedback>
+              {getFieldDecorator('school', {
+                initialValue: this.props.nickname,
+                rules: [{
+                  required: true,
+                  message: '请输入所在学校！'
+                }]
+              })(
+                <Input />
+              )}
+            </FormItem>
+            <FormItem label="头像">
               {getFieldDecorator('avatar', {
                 initialValue: this.state.imgUrl,
                 rules: [{ required: true, message: '请选择头像！'}]
@@ -119,7 +152,11 @@ const RegisterModal = Form.create()(
             <FormItem label="昵称" hasFeedback>
               {getFieldDecorator('nickname', {
                 initialValue: this.props.nickname,
-                rules: [{ required: true, message: '请输入昵称！'}]
+                rules: [{
+                  required: true,
+                  max: 16,
+                  message: '请输入昵称！'
+                }]
               })(
                 <Input />
               )}
@@ -166,6 +203,9 @@ class LoginLayout extends React.Component {
         name: values.userName,
         password: values.password,
         confirm_password: values.rePassword,
+        sex: values.sex,
+        real_name: values.name,
+        school: values.school,
         avatar: `http://p7knynd79.bkt.clouddn.com/${values.avatar.file.response.hash}`
       }
       console.log('values>>>>>', registerInfo);
@@ -174,6 +214,7 @@ class LoginLayout extends React.Component {
         type: 'users/uerRegister',
         payload: registerInfo
       })
+      message.success('注册成功！');
       form.resetFields();
       this.setState({
         visible: false
@@ -220,7 +261,7 @@ class LoginLayout extends React.Component {
             </FormItem>
             <FormItem>
               <a style={{ color: '#EC7700' }} onClick={this.showModal} >注册用户</a>
-              <Button type="primary" htmlType="submit" className={styles.formButton}>
+              <Button type="primary" htmlType="submit" style={{ backgroundColor: '#EC7700', borderColor: '#EC7700'}} className={styles.formButton}>
                 登录
               </Button>
               <RegisterModal
