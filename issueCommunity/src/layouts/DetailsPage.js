@@ -11,6 +11,8 @@ import { Link } from 'dva/router';
 import styles from './DetailsPage.less';
 import Comment from '../components/Comment/Comment';
 import InputArea from '../components/Comment/InputArea';
+import Images from '../components/Images';
+import Videos from '../components/Videos';
 
 const { Content, Header, Footer } = Layout;
 const QINIU_SERVER = 'http://up.qiniu.com';
@@ -93,6 +95,8 @@ class DetailsPage extends React.Component {
         <Content className={styles.content}>
           <h2>{currentData.title}</h2>
           <article>{currentData.description}{currentData.description}{currentData.description}{currentData.description}{currentData.description}{currentData.description}{currentData.description}{currentData.description}</article>
+          <Images />
+          <Videos />
           <Divider />
           <div className={styles.inputArea}>
             <InputArea />

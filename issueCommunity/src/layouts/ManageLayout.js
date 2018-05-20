@@ -34,7 +34,7 @@ class ManageLayout extends React.Component {
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <SubMenu
               key="sub1"
-              title={<span><Icon type="area-chart" /><span>城市综合数据</span></span>}
+              title={<span><Icon type="area-chart" /><span>社区综合数据</span></span>}
             >
               <Menu.Item key="1">
                 <Link to="/manage/users">用户信息</Link>
@@ -62,7 +62,7 @@ class ManageLayout extends React.Component {
                 }
               >
                 <Menu.Item key="logout">
-                  退出登录
+                  <Link to="/login">退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
