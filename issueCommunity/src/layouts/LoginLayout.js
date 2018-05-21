@@ -10,8 +10,6 @@ const { Content } = Layout;
 const RegisterModal = Form.create()(
   class extends React.Component {
     state = {
-      // confirmDirty: false,
-      // autoCompleteResult: [],
       imgUrl: null
     };
     compareToFirstPassword = (rule, value, callback) => {

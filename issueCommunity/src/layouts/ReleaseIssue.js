@@ -4,6 +4,7 @@
  */
 
 import React from 'react';
+import { connect } from 'dva';
 import { Link } from 'dva/router';
 import { Modal, Form, Layout, Dropdown, Avatar, Menu, Input, Upload, Icon, message, Button } from 'antd';
 
@@ -26,7 +27,8 @@ class ReleaseIssue extends React.Component {
     previewVisible: false,
     previewImage: '',
     fileList: [],
-    videoUrl: null,
+    images: null,
+    video: null
   };
 
   handleCancel = () => this.setState({ previewVisible: false })
@@ -38,17 +40,34 @@ class ReleaseIssue extends React.Component {
     });
   }
 
-  handleChange = ({ fileList }) => this.setState({ fileList })
+  handleChange = ({ fileList }) => {
+    this.setState({
+      fileList
+    })
+    if(fileList[0].status !== 'uploading') {
+      this.setState({
+        images: `http://p7knynd79.bkt.clouddn.com/${fileList[0].response.hash}`
+      })
+    }
+  }
 
   handleSubmit = (e) => {
     e.preventDefault();
     this.props.form.validateFields((err, values) => {
       if (!err) {
-        console.log('Received values of form: ', values);
-        // this.props.dispatch({
-        //   type: 'users/adminLogin',
-        //   payload: values,
-        // })
+        const articleContent = {
+          title: values.title,
+          content: values.content,
+          image1: this.state.images,
+          image2: null,
+          image3: null,
+          video: this.state.video
+        }
+        console.log('articleContent>>>>>>', articleContent);
+        this.props.dispatch({
+          type: 'article/writeArticle',
+          payload: articleContent
+        })
       }
     });
   }
@@ -63,20 +82,20 @@ class ReleaseIssue extends React.Component {
         authorization: 'authorization-text',
       },
       data: data,
-        onChange(info) {
-          if (info.file.status !== 'uploading') {
-            console.log('qqqqqqqqqq', info.file, info.fileList);
-          }
-          if (info.file.status === 'done') {
-            _this.setState({
-              imgUrl: `http://p7knynd79.bkt.clouddn.com/${info.file.response.hash}`
-            })
-            console.log('aaaaaaaa', info.file.response.hash);
-            message.success(`${info.file.name} 上传成功`);
-          } else if (info.file.status === 'error') {
-            message.error(`${info.file.name} 上传失败`);
-          }
-        },
+      onChange(info) {
+        if (info.file.status !== 'uploading') {
+          console.log('qqqqqqqqqq', info.file, info.fileList);
+        }
+        if (info.file.status === 'done') {
+          _this.setState({
+            video: `http://p7knynd79.bkt.clouddn.com/${info.file.response.hash}`
+          })
+          console.log('aaaaaaaa', info.file.response.hash);
+          message.success(`${info.file.name} 上传成功`);
+        } else if (info.file.status === 'error') {
+          message.error(`${info.file.name} 上传失败`);
+        }
+      },
     };
     const { previewVisible, previewImage, fileList } = this.state;
     const uploadButton = (
@@ -132,22 +151,33 @@ class ReleaseIssue extends React.Component {
               )}
             </FormItem>
             <FormItem>
-              <Upload
-                action={QINIU_SERVER}
-                data={data}
-                listType="picture-card"
-                fileList={fileList}
-                onPreview={this.handlePreview}
-                onChange={this.handleChange}
-              >
-                {fileList.length >= 3 ? null : uploadButton}
-              </Upload>
+              {getFieldDecorator('images', {
+                rules: []
+              })(
+                <Upload
+                  action={QINIU_SERVER}
+                  data={data}
+                  listType="picture-card"
+                  fileList={fileList}
+                  onPreview={this.handlePreview}
+                  onChange={this.handleChange}
+                >
+                  {fileList.length >= 1 ? null : uploadButton}
+                </Upload>
+              )}
             </FormItem>
             <FormItem>
-              <Upload style={{ marginTop: 30 }} {...props}>
-                <Icon style={{ fontSize: 30, color: '#EC7700' }} type="video-camera" />
-                <span style={{ marginLeft: 10, marginBottom: 20, color: '#EC7700' }}>上传视频</span>
-              </Upload>
+              {getFieldDecorator('videos', {
+                rules: []
+              })(
+                <Upload
+                  {...props}
+                  style={{ marginTop: 30 }}
+                >
+                  <Icon style={{ fontSize: 30, color: '#EC7700' }} type="video-camera" />
+                  <span style={{ marginLeft: 10, marginBottom: 20, color: '#EC7700' }}>上传视频</span>
+                </Upload>
+              )}
             </FormItem>
             <FormItem>
               <Button htmlType="submit" style={{ float: 'right', color: 'white', backgroundColor: '#EC7700', borderColor: '#EC7700' }} type="primary">发布</Button>
@@ -165,4 +195,4 @@ class ReleaseIssue extends React.Component {
 
 ReleaseIssue = Form.create({})(ReleaseIssue);
 
-export default ReleaseIssue;
+export default connect(({ article }) => ({ ...article }))(ReleaseIssue);

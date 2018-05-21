@@ -12,6 +12,7 @@ export default {
 
   effects: {
     *adminLogin({ payload }, { select, put, call }) {
+      console.log('userPayload>>>>', payload);
       const result = yield call(usersLogin, payload);
       if(result.status === 'success') {
         const usersInfo = JSON.stringify(result);
