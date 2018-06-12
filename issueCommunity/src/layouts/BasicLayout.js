@@ -3,6 +3,7 @@
  */
 
 import React from 'react';
+import { connect } from 'dva';
 import { Link } from 'dva/router';
 import { Layout, Avatar, Menu, Dropdown } from 'antd';
 
@@ -23,7 +24,14 @@ for (let i = 0; i < 23; i++) {
 }
 
 class BasicLayout extends React.Component {
+  componentDidMount() {
+    this.props.dispatch({
+      type: 'article/getArticles'
+    })
+  }
   render() {
+    const { articles } = this.props;
+    console.log('articles_____', articles);
     const loginIngo = JSON.parse(localStorage.getItem('usersInfo'));
     console.log('loginIngo>>>>>', loginIngo);
     const menu = (
@@ -43,7 +51,7 @@ class BasicLayout extends React.Component {
           </Dropdown>
         </Header>
         <Content className={styles.content}>
-          <Articles />
+          <Articles listData={articles.data} />
         </Content>
         <Footer className={styles.footer}>Issue Community ©2018 Designed by Glassay</Footer>
       </Layout>
@@ -51,4 +59,6 @@ class BasicLayout extends React.Component {
   }
 }
 
-export default BasicLayout;
+export default connect(state => ({
+  articles: state.article.articles
+}))(BasicLayout);

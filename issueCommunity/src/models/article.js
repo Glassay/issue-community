@@ -1,23 +1,24 @@
 import { routerRedux } from 'dva/router';
 // import { message } from 'antd';
 
-import { writeArticles } from '../services/articles';
+import { writeArticles, getAllArticles } from '../services/articles';
 
 export default {
   namespace: 'article',
 
   state: {
-    currentData: null,
-    articles: null
+    currentData: '',
+    articles: ''
   },
 
   effects: {
-    // *getArticles({ payload }, { put, call, select }) {
-    //   const res = yield call(getAllArticles, payload)
-    //   yield put({
-
-    //   })
-    // },
+    *getArticles({ payload }, { put, call }) {
+      const res = yield call(getAllArticles)
+      yield put({
+        type: 'saveArticles',
+        payload: res
+      })
+    },
 
     *readArticle({ payload }, { put }) {
       console.log('payload>>>>>', payload);

@@ -44,7 +44,7 @@ class Articles extends React.Component {
           },
           pageSize: 6,
         }}
-        dataSource={listData}
+        dataSource={this.props.listData}
         renderItem={item => (
           <List.Item
             key={item.id}

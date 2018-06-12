@@ -11,7 +11,7 @@ export async function writeArticles(params) {
 
 export async function getAllArticles(params) {
   return request({
-    url: '/bbs',
+    url: '/bbs/art/get',
     method: 'get',
     data: params
   })
