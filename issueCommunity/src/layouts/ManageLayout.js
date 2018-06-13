@@ -62,7 +62,7 @@ class ManageLayout extends React.Component {
                 }
               >
                 <Menu.Item key="logout">
-                  <Link to="/login">退出登录</Link>
+                  <Link to="/">退出登录</Link>
                 </Menu.Item>
               </SubMenu>
             </Menu>
@@ -89,3 +89,4 @@ class ManageLayout extends React.Component {
 }
 
 export default ManageLayout;
+
