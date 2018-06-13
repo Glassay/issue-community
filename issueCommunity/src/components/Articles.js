@@ -26,13 +26,19 @@ const IconText = ({ type, text }) => (
 );
 
 class Articles extends React.Component {
-  onEnter = (id, item) => {
+  onEnter = (item) => {
     this.props.dispatch({
       type: 'article/readArticle',
       payload: item
     })
     console.log('item>>>>>', item);
   }
+
+  submitArticle = (item) => {
+    this.props.getId(item);
+    console.log('get id++++', item);
+  }
+
   render() {
     return(
       <List
@@ -52,8 +58,8 @@ class Articles extends React.Component {
           >
             <List.Item.Meta
               avatar={<Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRwvtnOwp0gVJ9tOOWFh7jUcOj7_Q-sbD8cR303orbyJNFF1C6" />}
-              title={<span onClick={() => this.onEnter(item.id, item)} className={styles.title}>{item.title}</span>}
-              description={item.description}
+              title={<span onClick={() => this.submitArticle(this.props.item)} className={styles.title}>{item.title}</span>}
+              description={item.content}
             />
           </List.Item>
         )}
@@ -62,4 +68,5 @@ class Articles extends React.Component {
   }
 }
 
-export default connect(({ article }) => ({ ...article }))(Articles);
+// export default connect(({ article }) => ({ ...article }))(Articles);
+export default Articles;

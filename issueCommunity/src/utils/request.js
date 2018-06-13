@@ -3,13 +3,15 @@ import qs from 'qs';
 import HttpStatus from 'http-status-codes';
 import NProgress from 'nprogress';
 
-import '../assets/nprogress.css';
+import '../../node_modules/nprogress/nprogress.css';
+
+// import '../assets/nprogress.css';
 // import {
 //   baseURL,
 //   requestTimeOut
 // }                 from './config'
 
-axios.defaults.baseURL = "http://192.168.0.106:8080";
+axios.defaults.baseURL = "http://192.168.0.111:8081";
 axios.defaults.timeout = 10000;
 axios.defaults.withCredentials = true;
 

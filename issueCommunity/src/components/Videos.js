@@ -43,11 +43,12 @@ export default class Videos extends React.Component {
         >
           <video
             id="media"
-            src="http://p7knynd79.bkt.clouddn.com/ligSrF9j7Z_BOQvT0D7WD_n9iKp8"
+            // src="http://p7knynd79.bkt.clouddn.com/ligSrF9j7Z_BOQvT0D7WD_n9iKp8"
+            src={this.props.video}
             poster="posterimage.jpg"
             controls="controls"
           >
-            抱歉，您的浏览器不支持内嵌视频，不过不用担心，你可以 <a href="http://p7knynd79.bkt.clouddn.com/ligSrF9j7Z_BOQvT0D7WD_n9iKp8">下载</a>
+            抱歉，您的浏览器不支持内嵌视频，不过不用担心，你可以 <a href={this.props.video}>下载</a>
             并用你喜欢的播放器观看!
           </video>
         </Modal>

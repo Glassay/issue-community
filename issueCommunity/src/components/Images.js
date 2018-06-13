@@ -14,6 +14,7 @@ class Images extends React.Component {
       visible: true,
       i: i
     });
+    console.log('show');
     console.log('index>>>>', i);
   }
 
@@ -25,27 +26,18 @@ class Images extends React.Component {
   }
 
   render() {
-    const imgs = [
-      'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-473716.jpg',
-      'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-371371.jpg',
-      'https://wallpapers.wallhaven.cc/wallpapers/full/wallhaven-365712.png'
-    ]
     return(
       <div className={styles.layout}>
-        {
-          imgs.map((item, index) => (
-            <div key={index}>
-              <img onClick={() => this.showModal(index)} style={{ padding: 10 }} height="150px" width="150" src={item} alt="" />
-            </div>
-          ))
-        }
+        <div>
+          <img onClick={this.showModal} style={{ padding: 10 }} height="150px" width="150" src={this.props.image} alt="" />
+        </div>
         <Modal
           visible={this.state.visible}
           onCancel={this.handleCancel}
           width="70%"
           footer={null}
         >
-          <img src={imgs[this.state.i]} height="100%" width="100%" alt="" />
+          <img src={this.props.image} height="100%" width="100%" alt="" />
         </Modal>
       </div>
     );
