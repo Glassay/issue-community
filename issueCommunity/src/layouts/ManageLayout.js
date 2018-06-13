@@ -34,7 +34,7 @@ class ManageLayout extends React.Component {
           <Menu theme="dark" defaultSelectedKeys={['1']} mode="inline">
             <SubMenu
               key="sub1"
-              title={<span><Icon type="area-chart" /><span>社区综合数据</span></span>}
+              title={<span><Icon type="area-chart" /><span>论坛管理</span></span>}
             >
               <Menu.Item key="1">
                 <Link to="/manage/users">用户信息</Link>

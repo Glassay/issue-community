@@ -18,6 +18,7 @@ class ArticleInfo extends React.Component {
     })
     console.log('ID++++++', ID);
   }
+
   render() {
     const { articles } = this.props;
     console.log('wenzhang', articles);
