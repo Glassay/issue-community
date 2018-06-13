@@ -84,31 +84,36 @@ class BasicLayout extends React.Component {
             </SubMenu>
           </Menu> */}
         </Header>
-        <Content className={styles.content}>
-          <List
-            itemLayout="vertical"
-            size="large"
-            pagination={{
-              onChange: (page) => {
-                console.log(page);
-              },
-              pageSize: 6,
-            }}
-            dataSource={articles.data}
-            renderItem={item => (
-              <List.Item
-                key={item.id}
-                actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
-              >
-                <List.Item.Meta
-                  avatar={<Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRwvtnOwp0gVJ9tOOWFh7jUcOj7_Q-sbD8cR303orbyJNFF1C6" />}
-                  title={<span onClick={() => this.readDetails(item)} className={styles.title1}>{item.title}</span>}
-                  description={item.content}
-                />
-              </List.Item>
-            )}
-          />
-        </Content>
+        {
+          articles.data === null || undefined ? null :
+          <div>
+            <Content className={styles.content}>
+              <List
+                itemLayout="vertical"
+                size="large"
+                pagination={{
+                  onChange: (page) => {
+                    console.log(page);
+                  },
+                  pageSize: 6,
+                }}
+                dataSource={articles.data}
+                renderItem={item => (
+                  <List.Item
+                    key={item.id}
+                    actions={[<IconText type="star-o" text="156" />, <IconText type="like-o" text="156" />, <IconText type="message" text="2" />]}
+                  >
+                    <List.Item.Meta
+                      avatar={<Avatar src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQRwvtnOwp0gVJ9tOOWFh7jUcOj7_Q-sbD8cR303orbyJNFF1C6" />}
+                      title={<span onClick={() => this.readDetails(item)} className={styles.title1}>{item.title}</span>}
+                      description={item.content}
+                    />
+                  </List.Item>
+                )}
+              />
+            </Content>
+          </div>
+        }
         <Footer className={styles.footer}>Issue Community ©2018 Designed by Glassay</Footer>
       </Layout>
     );

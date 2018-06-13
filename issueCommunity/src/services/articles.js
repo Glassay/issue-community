@@ -16,3 +16,11 @@ export async function getAllArticles(params) {
     data: params
   })
 }
+
+export async function replyComment(params) {
+  return request({
+    url: '/bbs/comment/addrep',
+    method: 'post',
+    data: params
+  })
+}

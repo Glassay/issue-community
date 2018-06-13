@@ -20,7 +20,9 @@ class Comment extends React.Component {
           </div>
         </div>
         <article>{this.props.content}</article>
-        {this.props.file === '' ? <a style={{ display: 'none' }} href={this.props.file} target="view_window">附加文件</a>: <a href={this.props.file} target="view_window">附加文件</a>}
+        {this.props.file === '' ? <a style={{ visibility: 'hidden' }} href={this.props.file} target="view_window">附加文件</a>: <a href={this.props.file} target="view_window">附加文件</a>}
+        <h3 style={{ float: 'right', color: '#EC7700' }}>回复</h3>
+        <div style={{ clear: 'both' }} />
         {/* <a href={this.props.file} target="view_window">附加文件</a> */}
         <Divider />
       </div>

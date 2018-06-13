@@ -1,7 +1,7 @@
 import { routerRedux } from 'dva/router';
 import { message } from 'antd';
 
-import { writeArticles, getAllArticles } from '../services/articles';
+import { writeArticles, getAllArticles, replyComment } from '../services/articles';
 import { getComment, releaseComment } from '../services/comment';
 
 export default {
@@ -31,6 +31,10 @@ export default {
     *readArticle({ payload }, { call, put }) {
       console.log('readArticle+++++++', payload);
       // const id = +payload.ID;
+      yield put({
+        type: 'saveArticleId',
+        payload: payload.ID
+      })
       const id = {
         'id': +payload.ID
       }
@@ -57,6 +61,11 @@ export default {
         message.error('发表失败！');
       }
     },
+
+    *replyComments({ payload }, { call }) {
+      const res = yield call(replyComment, payload);
+      console.log('回复状态++++', res);
+    }
   },
 
   reducers: {
