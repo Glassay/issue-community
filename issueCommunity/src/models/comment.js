@@ -1,6 +1,3 @@
-import { routerRedux } from 'dva/router';
-import { message } from 'antd';
-
 import { releaseComment, getComment } from '../services/comment';
 
 export default {

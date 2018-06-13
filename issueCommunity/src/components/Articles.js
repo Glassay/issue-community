@@ -4,7 +4,7 @@
  */
 
 import React from 'react';
-import { connect } from 'dva';
+// import { connect } from 'dva';
 import { List, Avatar, Icon } from 'antd';
 
 import styles from './Articles.less';

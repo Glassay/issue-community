@@ -1,5 +1,3 @@
-import { message } from 'antd';
-
 import { userManage, articleManage, getArticle, getUser } from '../services/manage';
 
 export default {
